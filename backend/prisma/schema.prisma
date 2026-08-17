@@ -1,0 +1,83 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Company {
+  id                 String            @id @default(uuid())
+  name               String            @unique
+  slug               String?           @unique
+  website            String?           @map("website")
+  careerPageUrl      String            @default("") @map("career_page_url")
+  atsProvider        String?           @map("ats_provider")
+  atsPlatform        String            @default("greenhouse") @map("ats_platform")
+  consistencyScore   Float?            @default(100.0) @map("consistency_score")
+  authenticityGrade  String?           @default("A+") @map("authenticity_grade")
+  snapshots          ListingSnapshot[]
+  createdAt          DateTime          @default(now()) @map("created_at")
+  updatedAt          DateTime          @default(now()) @updatedAt @map("updated_at")
+
+  @@map("company")
+}
+
+model ListingSnapshot {
+  id              String   @id @default(uuid())
+  companyId       String   @map("company_id")
+  rawTitle        String   @map("raw_title")
+  canonicalTitle  String?  @map("canonical_title")
+  normalizedJobId String   @default("") @map("normalized_job_id")
+  salaryMin       Float?   @map("salary_min")
+  salaryMax       Float?   @map("salary_max")
+  currency        String?  @default("USD")
+  source          String   // greenhouse | lever | linkedin | indeed
+  sourceUrl       String?  @map("source_url")
+  url             String   @default("") @map("url")
+  status          String   @default("open") // open | closed
+  repostCount30d  Int?     @default(0) @map("repost_count_30d")
+  scrapedAt       DateTime @default(now()) @map("scraped_at")
+  postedDate      DateTime @default(now()) @map("posted_date")
+  capturedAt      DateTime @default(now()) @map("captured_at")
+
+  company         Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([normalizedJobId, capturedAt(sort: Desc)])
+  @@index([companyId, source])
+  @@map("listing_snapshot")
+}
+
+model JobScore {
+  id              String    @id @default(uuid())
+  listingId       String?   @map("listing_id")
+  normalizedJobId String    @unique @default("") @map("normalized_job_id")
+  finalScore      Int?      @map("final_score")
+  score           Int       @default(100)
+  verdict         String?   @default("MATCH")
+  deductionsJson  Json?     @map("deductions_json")
+  evidenceJson    Json      @map("evidence_json")
+  sourceCount     Int       @default(1) @map("source_count")
+  calculatedAt    DateTime? @default(now()) @map("calculated_at")
+  computedAt      DateTime  @default(now()) @map("computed_at")
+
+  @@map("job_score")
+}
+
+model CollectorHealth {
+  id              String    @id @default(uuid())
+  collectorName   String?   @map("collector_name")
+  collectorId     String    @unique @map("collector_id")
+  sourceType      String    @default("greenhouse") @map("source_type")
+  status          String    @default("HEALTHY") // HEALTHY | DEGRADED | HEALING | INVESTIGATING | PATCH_READY
+  uptimePercent   Float?    @default(100.0) @map("uptime_percent")
+  rows24h         Int?      @default(0) @map("rows_24h")
+  lastRunAt       DateTime  @default(now()) @map("last_run_at")
+  lastDriftAt     DateTime? @map("last_drift_at")
+  lastHealedAt    DateTime? @map("last_healed_at")
+  failureCount    Int       @default(0) @map("failure_count")
+  pendingHealJson Json?     @map("pending_heal_json")
+
+  @@map("collector_health")
+}
