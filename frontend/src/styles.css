@@ -1,0 +1,364 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * HireLens design system — Swiss Editorial Brutalism / OSINT hardware terminal.
+ * Warm pumice paper canvas, limestone cards, 1px carbon borders, hard offset shadows.
+ */
+
+@theme inline {
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius-4xl: 0px;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-ember: var(--ember);
+  --color-ember-foreground: var(--ember-foreground);
+  --color-violet: var(--violet);
+  --color-violet-foreground: var(--violet-foreground);
+  --color-indigo: var(--indigo);
+  --color-indigo-ink: var(--indigo-ink);
+  --color-limestone: var(--limestone);
+  --color-ink: var(--ink);
+  --color-legit: var(--legit);
+  --color-legit-bright: var(--legit-bright);
+  --color-amber: var(--amber);
+  --color-amber-foreground: var(--ink);
+  --color-paper: var(--paper);
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --radius: 0px;
+  /* #DFDCD5 warm tactical pumice paper */
+  --background: oklch(0.885 0.008 85);
+  /* #0A0A0B deep carbon */
+  --foreground: oklch(0.145 0.002 285);
+  /* #F5F4F0 limestone */
+  --card: oklch(0.963 0.005 95);
+  --card-foreground: oklch(0.145 0.002 285);
+  --popover: oklch(0.963 0.005 95);
+  --popover-foreground: oklch(0.145 0.002 285);
+  --primary: oklch(0.145 0.002 285);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.963 0.005 95);
+  --secondary-foreground: oklch(0.145 0.002 285);
+  --muted: oklch(0.94 0.006 90);
+  --muted-foreground: oklch(0.46 0.008 100);
+  --accent: oklch(0.963 0.005 95);
+  --accent-foreground: oklch(0.145 0.002 285);
+  --destructive: oklch(0.643 0.235 36);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.145 0.002 285);
+  --input: oklch(0.145 0.002 285);
+  --ring: oklch(0.457 0.24 277);
+
+  /* #FC5000 molten ember */
+  --ember: oklch(0.643 0.235 36);
+  --ember-foreground: oklch(0.985 0 0);
+  /* #4338CA / #1E1B4B deep indigo ink */
+  --violet: oklch(0.257 0.09 281);
+  --violet-foreground: oklch(0.985 0 0);
+  --indigo: oklch(0.457 0.24 277);
+  --indigo-ink: oklch(0.257 0.09 281);
+  --limestone: oklch(0.963 0.005 95);
+  --paper: oklch(0.885 0.008 85);
+  --ink: oklch(0.145 0.002 285);
+  /* #059669 / #10B981 sub-radar emerald */
+  --legit: oklch(0.596 0.126 163);
+  --legit-bright: oklch(0.696 0.17 162);
+  --amber: oklch(0.78 0.16 74);
+
+  --grid-line: color-mix(in oklab, var(--ink) 7%, transparent);
+  --grid-tick: color-mix(in oklab, var(--ink) 16%, transparent);
+}
+
+.dark {
+  --background: oklch(0.885 0.008 85);
+  --foreground: oklch(0.145 0.002 285);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    /* 24px crosshair grid: faint rules + tick marks at intersections */
+    background-image:
+      linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(to right, var(--grid-tick) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-tick) 1px, transparent 1px);
+    background-size:
+      24px 24px,
+      24px 24px,
+      120px 7px,
+      7px 120px;
+    background-position:
+      0 0,
+      0 0,
+      0 0,
+      0 0;
+  }
+
+  ::selection {
+    background: var(--ember);
+    color: var(--ember-foreground);
+  }
+
+  html.has-custom-cursor,
+  html.has-custom-cursor body,
+  html.has-custom-cursor * {
+    cursor: none !important;
+  }
+}
+
+@utility hl-frame {
+  border: 1px solid var(--ink);
+  background-color: var(--card);
+}
+
+@utility hl-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.035em;
+}
+
+@utility hl-mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Hard brutalist offset shadow, no blur */
+@utility hl-shadow {
+  box-shadow: 4px 4px 0px var(--ink);
+}
+
+/* Tactile mechanical press: lift on hover, depress on click */
+@utility hl-press {
+  box-shadow: 4px 4px 0px var(--ink);
+  transition: all 100ms ease-out;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 6px 6px 0px var(--ink);
+  }
+  &:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0px var(--ink);
+  }
+}
+
+/* Flat variant: no resting shadow, mechanical on interaction */
+@utility hl-press-flat {
+  transition: all 100ms ease-out;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 0px var(--ink);
+  }
+  &:active {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0px var(--ink);
+  }
+}
+
+/* Rubber-stamp seal */
+@utility hl-stamp {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  border-width: 2px;
+  border-style: solid;
+  transform: rotate(-2deg);
+}
+
+@keyframes hl-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@utility hl-marquee {
+  animation: hl-marquee 46s linear infinite;
+}
+
+@keyframes hl-pulse-led {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 currentColor;
+    opacity: 1;
+  }
+  50% {
+    box-shadow: 0 0 0 4px transparent;
+    opacity: 0.45;
+  }
+}
+
+@utility hl-led {
+  display: inline-block;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 9999px;
+  background-color: currentColor;
+  animation: hl-pulse-led 1.4s ease-in-out infinite;
+}
+
+@utility hl-lift {
+  transition: all 100ms ease-out;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 6px 6px 0px var(--ink);
+  }
+  &:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0px var(--ink);
+  }
+}
+
+@utility hl-receipt-edge {
+  mask-image:
+    linear-gradient(#000 0 0),
+    conic-gradient(from -45deg at bottom, #0000 25%, #000 0) bottom / 14px 7px repeat-x,
+    conic-gradient(from 135deg at top, #0000 25%, #000 0) top / 14px 7px repeat-x;
+  mask-composite: intersect;
+  -webkit-mask-image:
+    linear-gradient(#000 0 0),
+    conic-gradient(from -45deg at bottom, #0000 25%, #000 0) bottom / 14px 7px repeat-x,
+    conic-gradient(from 135deg at top, #0000 25%, #000 0) top / 14px 7px repeat-x;
+  -webkit-mask-composite: source-in;
+}
+
+@keyframes hl-glow {
+  0%,
+  100% {
+    box-shadow:
+      4px 4px 0 var(--ink),
+      0 0 0 0 color-mix(in oklab, var(--ember) 65%, transparent);
+  }
+  50% {
+    box-shadow:
+      4px 4px 0 var(--ink),
+      0 0 0 8px color-mix(in oklab, var(--ember) 0%, transparent);
+  }
+}
+
+@utility hl-glow {
+  animation: hl-glow 1.6s ease-in-out infinite;
+}
+
+@keyframes hl-diff-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@utility hl-diff-in {
+  animation: hl-diff-in 240ms ease-out both;
+}
+
+@keyframes hl-ping-bar {
+  0% {
+    transform: scaleY(0.25);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+@utility hl-ping-bar {
+  transform-origin: bottom;
+  animation: hl-ping-bar 900ms ease-in-out infinite alternate;
+}
+
+/* Fine CRT scanline overlay for terminal surfaces and drawer backdrops */
+@utility hl-scanlines {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      color-mix(in oklab, var(--ink) 22%, transparent) 0px,
+      color-mix(in oklab, var(--ink) 22%, transparent) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    opacity: 0.35;
+  }
+}
+
+/* Physical torn sawtooth edge along the bottom of the receipt panel */
+@utility hl-receipt-bottom {
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 8px;
+    pointer-events: none;
+    background: var(--ink);
+    mask-image: conic-gradient(from -45deg at bottom, #0000 25%, #000 0);
+    mask-size: 14px 8px;
+    mask-repeat: repeat-x;
+    -webkit-mask-image: conic-gradient(from -45deg at bottom, #0000 25%, #000 0);
+    -webkit-mask-size: 14px 8px;
+    -webkit-mask-repeat: repeat-x;
+  }
+}
+
+@keyframes hl-heal-pulse {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--legit-bright) 70%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 14px color-mix(in oklab, var(--legit-bright) 0%, transparent);
+  }
+}
+
+@utility hl-heal-pulse {
+  animation: hl-heal-pulse 1.2s ease-out 2;
+  border-color: var(--legit);
+}

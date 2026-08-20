@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700;900&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap');
+
+@layer base {
+  :root {
+    --pumice-warm-paper: #e2e2df;
+    --plasma-violet: #524ae9;
+    --molten-ember: #fc5000;
+    --obsidian: #070607;
+  }
+  html, body, #root {
+    background-color: var(--pumice-warm-paper);
+    color: var(--obsidian);
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 2rem;
+    margin: 0;
+  }
+
+  ::selection {
+    background-color: var(--molten-ember);
+    color: #ffffff;
+  }
+}
+
+/* Tactical 32px Square Grid Background */
+.bg-caldera-grid {
+  background-color: var(--pumice-warm-paper);
+  background-image:
+    linear-gradient(to right, rgba(7,6,7,0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(7,6,7,0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Concentric Bezel Enclosure */
+.bezel-container {
+  background: rgba(7, 6, 7, 0.025);
+  border: 1px solid rgba(7, 6, 7, 0.09);
+  padding: 6px;
+  border-radius: 28px;
+}
+
+.bezel-surface {
+  border-radius: 22px;
+  background: #f7f6f2;
+}
+
+/* Explicit Caldera Tokens */
+.bg-pumice { background-color: #e2e2df !important; }
+.bg-limestone { background-color: #f7f6f2 !important; }
+.bg-ember { background-color: #fc5000 !important; }
+.bg-plasma { background-color: #524ae9 !important; }
+.bg-sulfur { background-color: #f5f28e !important; }
+.bg-obsidian { background-color: #070607 !important; }
+.bg-chalk { background-color: #ffffff !important; }
+
+.text-ember { color: #fc5000 !important; }
+.text-plasma { color: #524ae9 !important; }
+.text-sulfur { color: #f5f28e !important; }
+.text-obsidian { color: #070607 !important; }
+.text-chalk { color: #ffffff !important; }
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #e2e2df;
+}
+::-webkit-scrollbar-thumb {
+  background: #fc5000;
+  border-radius: 9999px;
+}
+
+*:focus-visible {
+  outline: 2px solid #fc5000;
+  outline-offset: 2px;
+}
