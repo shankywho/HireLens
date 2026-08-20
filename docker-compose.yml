@@ -1,0 +1,91 @@
+version: '3.8'
+
+services:
+  # ----------------------------------------------------------------------------
+  # PostgreSQL Database
+  # ----------------------------------------------------------------------------
+  db:
+    image: postgres:15-alpine
+    container_name: hirelens-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespassword
+      POSTGRES_DB: hirelens
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d hirelens"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ----------------------------------------------------------------------------
+  # Redis Queue & Cache
+  # ----------------------------------------------------------------------------
+  redis:
+    image: redis:7-alpine
+    container_name: hirelens-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ----------------------------------------------------------------------------
+  # HireLens Express + BullMQ Backend API
+  # ----------------------------------------------------------------------------
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: hirelens-backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      PORT: 3001
+      NODE_ENV: production
+      DATABASE_URL: "postgresql://postgres:postgrespassword@db:5432/hirelens?schema=public"
+      REDIS_HOST: "redis"
+      REDIS_PORT: 6379
+      USE_SYNTHETIC_SCRAPER: "true"
+      GEMINI_API_KEY: "${GEMINI_API_KEY:-your-gemini-api-key-here}"
+      BRIGHTDATA_API_KEY: "${BRIGHTDATA_API_KEY:-your-brightdata-api-key}"
+      GREENHOUSE_COLLECTOR_ID: "${GREENHOUSE_COLLECTOR_ID:-c_msx28aib1bi38vk8vw}"
+      LEVER_COLLECTOR_ID: "${LEVER_COLLECTOR_ID:-c_msoqfr4nik4o54w99}"
+      LINKEDIN_COLLECTOR_ID: "${LINKEDIN_COLLECTOR_ID:-gd_l4dx9j9sscpvs7no2}"
+      INDEED_COLLECTOR_ID: "${INDEED_COLLECTOR_ID:-gd_l1viktl72bvl7bjuj0}"
+    ports:
+      - "3001:3001"
+    command: >
+      sh -c "npx prisma db push &&
+             npx ts-node prisma/seed.ts &&
+             node dist/app.js"
+
+  # ----------------------------------------------------------------------------
+  # HireLens Caldera OSINT Frontend UI
+  # ----------------------------------------------------------------------------
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: hirelens-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+      - "5173:80"
+
+volumes:
+  postgres_data:
+    driver: local

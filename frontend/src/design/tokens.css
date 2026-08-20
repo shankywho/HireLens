@@ -1,0 +1,57 @@
+/* Design Tokens – Caldera System */
+:root {
+  /* Typography */
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body: 'DM Sans', 'Plus Jakarta Sans', sans-serif;
+  --type-page-title: 32px;   /* 32–40px */
+  --type-section-heading: 22px; /* 18–24px */
+  --type-card-title: 18px;   /* 15–18px */
+  --type-body: 14px;        /* 13–15px */
+  --type-meta: 12px;        /* 11–12px */
+
+  /* Colors */
+  --color-primary-surface: #e2e2df;   /* pumice – off‑white */
+  --color-secondary-surface: #f7f6f2; /* limestone – light neutral */
+  --color-accent: #fc5000;            /* ember – orange (primary actions & penalties) */
+  --color-caution: #f5f28e;           /* sulfur – yellow */
+  --color-critical: #fc5000;           /* ember also used for critical */
+  --color-healthy: #00b300;           /* green for verified/healthy */
+  --color-text: #070607;              /* obsidian – main text */
+  --color-inverse: #ffffff;           /* chalk – inverse text */
+
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+
+  /* Border radius */
+  --radius-card: 40px;
+  --radius-pill: 800px;
+  --radius-input: 100px;
+}
+
+/* Utility helpers */
+.text-display { font-family: var(--font-display); }
+.text-body    { font-family: var(--font-body); }
+.text-page-title    { font-size: var(--type-page-title); }
+.text-section-heading{ font-size: var(--type-section-heading); }
+.text-card-title    { font-size: var(--type-card-title); }
+.text-body          { font-size: var(--type-body); }
+.text-meta          { font-size: var(--type-meta); }
+
+.bg-primary   { background-color: var(--color-primary-surface); }
+.bg-secondary { background-color: var(--color-secondary-surface); }
+.bg-accent    { background-color: var(--color-accent); }
+.bg-caution   { background-color: var(--color-caution); }
+.bg-healthy   { background-color: var(--color-healthy); }
+
+.text-primary   { color: var(--color-primary-surface); }
+.text-secondary { color: var(--color-secondary-surface); }
+.text-accent    { color: var(--color-accent); }
+.text-caution   { color: var(--color-caution); }
+.text-healthy   { color: var(--color-healthy); }
+
+.rounded-card { border-radius: var(--radius-card); }
+.rounded-pill { border-radius: var(--radius-pill); }
+.rounded-input{ border-radius: var(--radius-input); }
